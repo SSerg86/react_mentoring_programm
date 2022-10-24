@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb",
+  "extends": ["airbnb", "airbnb-typescript"],
   "env": {
     "browser": true,
     "node": true,
@@ -9,6 +9,7 @@
     "document": false
   },
   "parser": "@babel/eslint-parser",
+  "ignorePatterns": ["webpack/", "lint-staged.config.js"],
   "rules": {
     "react/function-component-definition": [
       "error",
@@ -36,9 +37,6 @@
   "parserOptions": {
     "ecmaVersion": 2020
   },
-  // "settings": {
-  //   "import/extensions": [".js", ".jsx", ".ts", ".tsx", ".mjs"]
-  // },
   "settings": {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     "import/parsers": {
@@ -50,6 +48,7 @@
       }
     }
   },
+  "plugins": ["jest"],
   "overrides": [
     {
       "files": ["**/*.ts?(x)"],
