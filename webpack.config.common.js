@@ -2,12 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './index.jsx',
+  entry: './index.tsx',
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'main.js',
   },
-  // mode: "development",
   module: {
     rules: [
       {
@@ -16,8 +15,8 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.tsx&$/,
-        loader: 'awesome-typescript-loader',
+        test: /\.(ts|tsx)$/,
+        loader: 'ts-loader',
       },
     ],
   },
@@ -27,13 +26,6 @@ module.exports = {
     }),
   ],
   target: 'web',
-  devServer: {
-    port: '8000',
-    static: ['./public'],
-    // open: true,
-    // hot: true,
-    liveReload: true,
-  },
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
   },

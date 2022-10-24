@@ -1,1 +1,16 @@
-node_modules
+# IDE
+/.idea
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# production
+/build
+
+# misc
+.DS_Store
+.huskyrc
+
+tsconfig.tsbuildinfo
