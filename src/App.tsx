@@ -1,10 +1,5 @@
 import React from 'react';
+import HomePage from './pages/HomePage';
 
-const App = () => (
-  <>
-    <h1>My First WebPack Project</h1>
-    <p>My First WebPack Project</p>
-  </>
-);
-
+const App = () => <HomePage />;
 export default App;
