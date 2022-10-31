@@ -15,7 +15,7 @@ const HeroBanner = ({
   buttonName,
   searchPanel,
   title,
-}: HeroBannerProps): React.ReactElement => (
+}: HeroBannerProps) => (
   <div className={classes.main}>
     <div className={classes.logo_block}>
       <img src={imageUrl} alt='Logo' />

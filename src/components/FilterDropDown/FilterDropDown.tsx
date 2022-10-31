@@ -4,9 +4,7 @@ interface FilterDropDownProps {
   realeseDate: string[];
 }
 
-const FilterDropDown = ({
-  realeseDate,
-}: FilterDropDownProps): React.ReactElement => (
+const FilterDropDown = ({ realeseDate }: FilterDropDownProps) => (
   <form>
     <select value='REALEASE DATE' id='releases' name='releases'>
       <option value='REALEASE DATE' selected>

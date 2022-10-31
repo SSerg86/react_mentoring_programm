@@ -9,11 +9,7 @@ interface FilterPannelProps {
   numFound: number;
 }
 
-const FilterPannel = ({
-  genres,
-  realeseDate,
-  numFound,
-}: FilterPannelProps): React.ReactElement => (
+const FilterPannel = ({ genres, realeseDate, numFound }: FilterPannelProps) => (
   <>
     <div className={classes.main}>
       {genres && (

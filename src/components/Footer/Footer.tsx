@@ -5,7 +5,7 @@ interface FooterProps {
   imageUrl: string;
 }
 
-const Footer = ({ imageUrl }: FooterProps): React.ReactElement => (
+const Footer = ({ imageUrl }: FooterProps) => (
   <div className={classes.footer}>
     <img src={imageUrl} alt='Logo' />
   </div>

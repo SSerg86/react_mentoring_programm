@@ -6,10 +6,7 @@ export interface SearchPanelProps {
   searchButton: string;
 }
 
-const SearchPanel = ({
-  searchButton,
-  placeholderText,
-}: SearchPanelProps): React.ReactElement => {
+const SearchPanel = ({ searchButton, placeholderText }: SearchPanelProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
