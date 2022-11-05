@@ -9,4 +9,12 @@ module.exports = merge(commonConfig, {
     static: ['./public'],
     liveReload: true,
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
 });

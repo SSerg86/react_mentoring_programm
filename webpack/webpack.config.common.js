@@ -8,25 +8,29 @@ module.exports = {
     path: path.resolve(__dirname, '../build'),
     filename: 'main.js',
   },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: 'babel-loader',
-      },
-      {
-        test: /\.(ts|tsx)$/,
-        loader: 'ts-loader',
-      },
-    ],
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
     new ESLintPlugin(),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        loader: 'ts-loader',
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+    ],
+  },
   target: 'web',
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
