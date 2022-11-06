@@ -1,23 +1,23 @@
 .main {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .item {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .sort_label {
-    font-size: 16px;
-    line-height: 20px;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    opacity: 0.6;
+  font-size: 16px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #ffffff;
+  opacity: 0.6;
 }
 
 .num_found {
-    font-size: 20px;
-    line-height: 24px;
-    color: #FFFFFF;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ffffff;
 }

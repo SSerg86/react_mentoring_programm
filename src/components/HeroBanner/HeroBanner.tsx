@@ -8,6 +8,7 @@ export interface HeroBannerProps {
   imageUrl: string;
   title?: string;
   searchPanel?: SearchPanelProps;
+  handleAddMovieModal?: () => void;
 }
 
 const HeroBanner = ({
@@ -15,11 +16,16 @@ const HeroBanner = ({
   buttonName,
   searchPanel,
   title,
+  handleAddMovieModal,
 }: HeroBannerProps) => (
   <div className={classes.main}>
     <div className={classes.logo_block}>
       <img src={imageUrl} alt='Logo' />
-      <button className={classes.button} type='button'>
+      <button
+        className={classes.button}
+        type='button'
+        onClick={() => handleAddMovieModal()}
+      >
         &#43; &#160;
         {buttonName}
       </button>

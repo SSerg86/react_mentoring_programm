@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ErrorBoundary from '../ErrorBoundery/ErrorBoundery';
 import FilterPannel from '../FilterPannel/FilterPannel';
 import MovieCard, { MovieCardProps } from '../MovieCard/MovieCard';
@@ -8,10 +8,27 @@ import classes from './MoviesGrid.module.css';
 
 export interface MoviesGridProp {
   movies: MovieCardProps[];
+  handleEditMovieModal?: () => void;
+  handleDeleteMovieModal?: () => void;
 }
 
 const MoviesGrid = (props: MoviesGridProp) => {
-  const { movies } = props;
+  const { movies, handleEditMovieModal, handleDeleteMovieModal } = props;
+
+  const [movieList, setMovieList] = useState<MovieCardProps[]>(movies);
+
+  useEffect(() => {
+    setMovieList(movies);
+  }, []);
+
+  const filteredMovie = (option: string) => {
+    const moviesToFilter = movies;
+    setMovieList(
+      moviesToFilter.filter((movie: MovieCardProps) =>
+        movie.release_date.includes(option)
+      )
+    );
+  };
 
   const genreListToRender = getGenresList(movies);
   const realeseDateList = getReleaseList(movies);
@@ -22,14 +39,21 @@ const MoviesGrid = (props: MoviesGridProp) => {
         genres={genreListToRender}
         realeseDate={realeseDateList}
         numFound={movies.length}
+        onFilter={filteredMovie}
       />
       <div className={classes.movies_grid}>
-        {movies &&
-          movies.map((movie: MovieCardProps) => (
-            <ErrorBoundary>
-              <MovieCard key={movie.id} {...movie} />
-            </ErrorBoundary>
-          ))}
+        {movieList &&
+          movieList.map((movie: MovieCardProps) => {
+            const movicardProps = {
+              ...movie,
+              handleEditMovieModal,
+            };
+            return (
+              <ErrorBoundary handleDeleteMovieModal={handleDeleteMovieModal}>
+                <MovieCard key={movie.id} {...movicardProps} />
+              </ErrorBoundary>
+            );
+          })}
       </div>
     </div>
   );

@@ -1,11 +1,9 @@
-/* eslint-disable */
-// disabled eslint here because didn't find a solution for fixing conflicts for a current component
-// TODO: resolve issue and remove disable line
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import classes from './ErrorBoundery.module.css';
 
 interface Props {
   children: ReactNode;
+  handleDeleteMovieModal: () => void;
 }
 
 interface State {
@@ -13,6 +11,9 @@ interface State {
 }
 
 class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+  }
   public state: State = {
     hasError: false,
   };
@@ -30,6 +31,12 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <div className={classes.error}>
           <h1>Sorry.. smth went wrong</h1>
+          <input
+            className={classes.delete_btn}
+            type='button'
+            value='Delete Movie'
+            onClick={this.props.handleDeleteMovieModal}
+          />
         </div>
       );
     }
