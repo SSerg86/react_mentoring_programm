@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import DeleteMovieModal from '../components/DeleteMovieModal/DeleteMovieModal';
-// import DeleteMovieModal from '../components/DeleteMovieModal/DeleteMovieModal';
 import Footer from '../components/Footer/Footer';
 import FormWrapper from '../components/FormWrapper/FormWrapper';
 import HeroBanner from '../components/HeroBanner/HeroBanner';
