@@ -1,11 +1,11 @@
 .container {
-    padding: 20px 60px;
-    background: #232323;
+  padding: 20px 60px;
+  background: #232323;
 }
 
 .movies_grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center;
-    gap: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  gap: 50px;
 }

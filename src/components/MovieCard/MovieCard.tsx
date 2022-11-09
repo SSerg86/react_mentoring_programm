@@ -17,16 +17,23 @@ export interface MovieCardProps {
   revenue: number;
   genres: string[];
   runtime: number;
+  handleEditMovieModal?: () => void;
 }
 
-const MovieCard = ({ title, poster_path, release_date, genres }: MovieCardProps) => {
+const MovieCard = ({
+  title,
+  poster_path,
+  release_date,
+  genres,
+  handleEditMovieModal,
+}: MovieCardProps) => {
   const date = new Date(release_date);
   if (!poster_path) {
     throw new Error('I crashed!');
   }
 
   return (
-    <div className={classes.main}>
+    <div className={classes.main} onClick={() => handleEditMovieModal()} aria-hidden>
       <img
         className={classes.image}
         src={poster_path || NOT_FOUND_IMG}
