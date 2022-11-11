@@ -6,18 +6,18 @@ const NOT_FOUND_IMG =
   'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
 
 export interface MovieCardProps {
-  id: number;
-  poster_path: string;
-  title: string;
-  vote_average: number;
-  vote_count: number;
-  release_date: string;
-  overview: string;
-  budget: number;
-  revenue: number;
-  genres: string[];
-  runtime: number;
-  handleEditMovieModal?: () => void;
+  id?: number;
+  poster_path?: string;
+  title?: string;
+  vote_average?: number;
+  vote_count?: number;
+  release_date?: string;
+  overview?: string;
+  budget?: number;
+  revenue?: number;
+  genres?: string[];
+  runtime?: number;
+  handleOpenMovieDetails?: () => void;
 }
 
 const MovieCard = ({
@@ -25,7 +25,7 @@ const MovieCard = ({
   poster_path,
   release_date,
   genres,
-  handleEditMovieModal,
+  handleOpenMovieDetails,
 }: MovieCardProps) => {
   const date = new Date(release_date);
   if (!poster_path) {
@@ -33,7 +33,11 @@ const MovieCard = ({
   }
 
   return (
-    <div className={classes.main} onClick={() => handleEditMovieModal()} aria-hidden>
+    <div
+      className={classes.main}
+      onClick={() => handleOpenMovieDetails()}
+      aria-hidden
+    >
       <img
         className={classes.image}
         src={poster_path || NOT_FOUND_IMG}

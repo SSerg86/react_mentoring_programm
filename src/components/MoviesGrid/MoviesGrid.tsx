@@ -8,12 +8,12 @@ import classes from './MoviesGrid.module.css';
 
 export interface MoviesGridProp {
   movies: MovieCardProps[];
-  handleEditMovieModal?: () => void;
+  handleOpenMovieDetails?: () => void;
   handleDeleteMovieModal?: () => void;
 }
 
 const MoviesGrid = (props: MoviesGridProp) => {
-  const { movies, handleEditMovieModal, handleDeleteMovieModal } = props;
+  const { movies, handleOpenMovieDetails, handleDeleteMovieModal } = props;
 
   const [sortOption, setSortOption] = useState<string>('');
 
@@ -23,9 +23,10 @@ const MoviesGrid = (props: MoviesGridProp) => {
           movie.release_date.includes(sortOption)
         )
       : movies;
-  }, [sortOption]);
+  }, [movies, sortOption]);
 
   const genreListToRender = getGenresList(movies);
+
   const realeseDateList = getReleaseList(movies);
 
   return (
@@ -41,10 +42,13 @@ const MoviesGrid = (props: MoviesGridProp) => {
           movieToRender.map((movie: MovieCardProps) => {
             const movicardProps = {
               ...movie,
-              handleEditMovieModal,
+              handleOpenMovieDetails,
             };
             return (
-              <ErrorBoundary handleDeleteMovieModal={handleDeleteMovieModal}>
+              <ErrorBoundary
+                key={movie.id}
+                handleDeleteMovieModal={handleDeleteMovieModal}
+              >
                 <MovieCard key={movie.id} {...movicardProps} />
               </ErrorBoundary>
             );

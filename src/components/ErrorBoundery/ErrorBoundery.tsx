@@ -1,3 +1,9 @@
+/* eslint-disable no-console */
+/* eslint-disable react/state-in-constructor */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable @typescript-eslint/lines-between-class-members */
+/* eslint-disable @typescript-eslint/no-useless-constructor */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import classes from './ErrorBoundery.module.css';
 

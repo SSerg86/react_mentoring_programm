@@ -3,12 +3,7 @@
   background-size: cover;
   padding: 20px 60px;
   max-height: 396px;
-}
-
-.logo_block {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .title {

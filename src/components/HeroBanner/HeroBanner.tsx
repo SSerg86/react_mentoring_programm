@@ -1,4 +1,5 @@
 import React from 'react';
+import LogoPanel from '../LogoPanel/LogoPanel';
 import SearchPanel, { SearchPanelProps } from '../SearchPanel/SearchPanel';
 
 import classes from './HeroBanner.module.css';
@@ -19,8 +20,7 @@ const HeroBanner = ({
   handleAddMovieModal,
 }: HeroBannerProps) => (
   <div className={classes.main}>
-    <div className={classes.logo_block}>
-      <img src={imageUrl} alt='Logo' />
+    <LogoPanel imageUrl={imageUrl}>
       <button
         className={classes.button}
         type='button'
@@ -29,7 +29,7 @@ const HeroBanner = ({
         &#43; &#160;
         {buttonName}
       </button>
-    </div>
+    </LogoPanel>
     <div className={classes.search_block}>
       <p className={classes.title}>{title}</p>
       <SearchPanel {...searchPanel} />
