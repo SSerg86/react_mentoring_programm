@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import DeleteMovieModal from '../components/DeleteMovieModal/DeleteMovieModal';
 import Footer from '../components/Footer/Footer';
 import FormWrapper from '../components/FormWrapper/FormWrapper';
@@ -16,6 +16,7 @@ const HomePage = () => {
   const [isAddForm, setIsAddForm] = useState<boolean>(false);
   const [isEditForm, setIsEditForm] = useState<boolean>(false);
   const [toShowDetails, setToShowDetails] = useState<boolean>(false);
+  const [movieIdForDetails, setMovieIdForDetails] = useState<number>(null);
   const [isDeleteMovieModal, setIsDeleteMovieModal] = useState<boolean>(false);
 
   const handleModalWindow = (value: boolean) => {
@@ -33,7 +34,8 @@ const HomePage = () => {
     });
   };
 
-  const handleOpenMovieDetails = useCallback(() => {
+  const handleOpenMovieDetails = useCallback((id: number) => {
+    setMovieIdForDetails(id);
     setToShowDetails(true);
     scrollToTop();
   }, []);
@@ -47,10 +49,10 @@ const HomePage = () => {
     setIsAddForm(true);
   };
 
-  // const handleEditMovieModal = () => {
-  //   setIsModalActive(true);
-  //   setIsEditForm(true);
-  // };
+  const handleEditMovieModal = () => {
+    setIsModalActive(true);
+    setIsEditForm(true);
+  };
 
   const handleDeleteMovieModal = () => {
     setIsModalActive(true);
@@ -66,17 +68,22 @@ const HomePage = () => {
     movies,
     handleOpenMovieDetails,
     handleDeleteMovieModal,
+    handleEditMovieModal,
   };
+
+  const movieDetails = useMemo(() => {
+    return movies.find((movie) => movie.id === movieIdForDetails);
+  }, [movieIdForDetails, movies]);
 
   const movieDetailsProps = {
     logo: heroBannerProps.imageUrl,
-    poster_path: movies[1].poster_path,
-    title: movies[1].title,
-    vote_average: movies[1].vote_average,
-    genre: movies[1].genres[1],
-    runtime: movies[1].runtime,
-    release_date: movies[1].release_date,
-    overview: movies[1].overview,
+    poster_path: movieDetails?.poster_path,
+    title: movieDetails?.title,
+    vote_average: movieDetails?.vote_average,
+    genre: movieDetails?.genres[1],
+    runtime: movieDetails?.runtime,
+    release_date: movieDetails?.release_date,
+    overview: movieDetails?.overview,
     handleClick: handleCloseMovieDetails,
   };
 

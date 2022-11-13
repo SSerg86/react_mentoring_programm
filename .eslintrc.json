@@ -4,7 +4,7 @@
     "airbnb-typescript",
     "prettier",
     "plugin:prettier/recommended",
-    "plugin:react-hooks/recommended"
+    "react-hooks"
   ],
   "env": {
     "browser": true,
@@ -64,7 +64,9 @@
       {
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "parserOptions": {
     "ecmaVersion": 2020

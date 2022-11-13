@@ -8,12 +8,18 @@ import classes from './MoviesGrid.module.css';
 
 export interface MoviesGridProp {
   movies: MovieCardProps[];
-  handleOpenMovieDetails?: () => void;
+  handleOpenMovieDetails?: (value: number) => void;
   handleDeleteMovieModal?: () => void;
+  handleEditMovieModal?: () => void;
 }
 
 const MoviesGrid = (props: MoviesGridProp) => {
-  const { movies, handleOpenMovieDetails, handleDeleteMovieModal } = props;
+  const {
+    movies,
+    handleOpenMovieDetails,
+    handleDeleteMovieModal,
+    handleEditMovieModal,
+  } = props;
 
   const [sortOption, setSortOption] = useState<string>('');
 
@@ -43,6 +49,7 @@ const MoviesGrid = (props: MoviesGridProp) => {
             const movicardProps = {
               ...movie,
               handleOpenMovieDetails,
+              handleEditMovieModal,
             };
             return (
               <ErrorBoundary

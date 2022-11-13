@@ -15,3 +15,8 @@
     object-fit: contain;
     width: 100%;
 }
+
+.round {
+    border: 1px solid #2A202D;
+    border-radius: 50%;
+}

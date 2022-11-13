@@ -1,4 +1,5 @@
 export interface IconButtonProps {
   icon: string;
-  handleClick?: () => void;
+  handleClick?: (e: React.MouseEvent) => void;
+  isRound?: boolean;
 }

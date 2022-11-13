@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import IconButton from '../IconButton/IconButton';
 import SingleMovieGenreList from '../SingleMovieGenreList/SingleMovieGenreList';
+import context_menu from '../../assets/images/context_menu.png';
 import classes from './MovieCard.module.css';
 
 const NOT_FOUND_IMG =
@@ -17,7 +19,8 @@ export interface MovieCardProps {
   revenue?: number;
   genres?: string[];
   runtime?: number;
-  handleOpenMovieDetails?: () => void;
+  handleOpenMovieDetails?: (value: number) => void;
+  handleEditMovieModal?: () => void;
 }
 
 const MovieCard = ({
@@ -25,17 +28,24 @@ const MovieCard = ({
   poster_path,
   release_date,
   genres,
+  id,
   handleOpenMovieDetails,
+  handleEditMovieModal,
 }: MovieCardProps) => {
   const date = new Date(release_date);
   if (!poster_path) {
     throw new Error('I crashed!');
   }
 
+  const handleContextButton = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    handleEditMovieModal();
+  }, []);
+
   return (
     <div
       className={classes.main}
-      onClick={() => handleOpenMovieDetails()}
+      onClick={() => handleOpenMovieDetails(id)}
       aria-hidden
     >
       <img
@@ -59,6 +69,13 @@ const MovieCard = ({
           ))}
         </SingleMovieGenreList>
       )}
+      <div className={classes.contextIcon}>
+        <IconButton
+          icon={context_menu}
+          handleClick={(e: React.MouseEvent) => handleContextButton(e)}
+          isRound={true}
+        />
+      </div>
     </div>
   );
 };
