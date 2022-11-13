@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import DeleteMovieModal from '../components/DeleteMovieModal/DeleteMovieModal';
 import Footer from '../components/Footer/Footer';
 import FormWrapper from '../components/FormWrapper/FormWrapper';
@@ -8,83 +8,19 @@ import MoviesGrid from '../components/MoviesGrid/MoviesGrid';
 import heroBannerProps from '../mocks/heroBanner';
 import classes from './HomePage.module.css';
 
-import movies from '../mocks/movies';
 import MovieDetails from '../components/MovieDetails/MovieDetails';
+import { useMoviesContext } from '../hooks/MoviesContext';
 
 const HomePage = () => {
-  const [isModalActive, setIsModalActive] = useState<boolean>(false);
-  const [isAddForm, setIsAddForm] = useState<boolean>(false);
-  const [isEditForm, setIsEditForm] = useState<boolean>(false);
-  const [toShowDetails, setToShowDetails] = useState<boolean>(false);
-  const [movieIdForDetails, setMovieIdForDetails] = useState<number>(null);
-  const [isDeleteMovieModal, setIsDeleteMovieModal] = useState<boolean>(false);
-
-  const handleModalWindow = (value: boolean) => {
-    setIsModalActive(value);
-    setIsAddForm(value);
-    setIsEditForm(value);
-    setIsDeleteMovieModal(value);
-  };
-
-  const scrollToTop = () => {
-    // eslint-disable-next-line no-restricted-globals
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-
-  const handleOpenMovieDetails = useCallback((id: number) => {
-    setMovieIdForDetails(id);
-    setToShowDetails(true);
-    scrollToTop();
-  }, []);
-
-  const handleCloseMovieDetails = useCallback(() => {
-    setToShowDetails(false);
-  }, []);
-
-  const handleAddMovieModal = () => {
-    setIsModalActive(true);
-    setIsAddForm(true);
-  };
-
-  const handleEditMovieModal = () => {
-    setIsModalActive(true);
-    setIsEditForm(true);
-  };
-
-  const handleDeleteMovieModal = () => {
-    setIsModalActive(true);
-    setIsDeleteMovieModal(true);
-  };
+  const { toShowDetails, isAddForm, isDeleteMovieModal, isEditForm } =
+    useMoviesContext();
 
   const heroBannerPropsExtended = {
     ...heroBannerProps,
-    handleAddMovieModal,
   };
-
-  const moviesGridProps = {
-    movies,
-    handleOpenMovieDetails,
-    handleDeleteMovieModal,
-    handleEditMovieModal,
-  };
-
-  const movieDetails = useMemo(() => {
-    return movies.find((movie) => movie.id === movieIdForDetails);
-  }, [movieIdForDetails, movies]);
 
   const movieDetailsProps = {
     logo: heroBannerProps.imageUrl,
-    poster_path: movieDetails?.poster_path,
-    title: movieDetails?.title,
-    vote_average: movieDetails?.vote_average,
-    genre: movieDetails?.genres[1],
-    runtime: movieDetails?.runtime,
-    release_date: movieDetails?.release_date,
-    overview: movieDetails?.overview,
-    handleClick: handleCloseMovieDetails,
   };
 
   return (
@@ -94,9 +30,9 @@ const HomePage = () => {
       ) : (
         <HeroBanner {...heroBannerPropsExtended} />
       )}
-      <MoviesGrid {...moviesGridProps} />
+      <MoviesGrid />
       <Footer imageUrl={heroBannerProps.imageUrl} />
-      <ModalWindow setActive={handleModalWindow} active={isModalActive}>
+      <ModalWindow>
         {isAddForm && <FormWrapper modal_title='Add Movie' />}
         {isEditForm && <FormWrapper modal_title='Edit Movie' />}
         {isDeleteMovieModal && (

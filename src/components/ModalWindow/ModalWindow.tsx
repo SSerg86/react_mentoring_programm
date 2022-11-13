@@ -1,15 +1,18 @@
 import * as React from 'react';
+import { useMoviesContext } from '../../hooks/MoviesContext';
 
 import classes from './ModalWindow.module.css';
 import type { ModalWindowProps } from './ModalWindow.types';
 
-const ModalWindow = ({ active, setActive, children }: ModalWindowProps) => {
-  const activeClass = active ? classes.active : '';
+const ModalWindow = ({ children }: ModalWindowProps) => {
+  const { handleModalWindow, isModalActive } = useMoviesContext();
+  const activeClass = isModalActive ? classes.active : '';
+
   return (
     <div
       aria-hidden
       className={`${classes.root} ${activeClass}`}
-      onClick={() => setActive(false)}
+      onClick={() => handleModalWindow(false)}
     >
       <div
         aria-hidden

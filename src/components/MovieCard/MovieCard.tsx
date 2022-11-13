@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import IconButton from '../IconButton/IconButton';
 import SingleMovieGenreList from '../SingleMovieGenreList/SingleMovieGenreList';
-import context_menu from '../../assets/images/context_menu.png';
+import contextMenu from '../../assets/images/context_menu.png';
 import classes from './MovieCard.module.css';
 
 const NOT_FOUND_IMG =
@@ -37,10 +37,10 @@ const MovieCard = ({
     throw new Error('I crashed!');
   }
 
-  const handleContextButton = useCallback((e: React.MouseEvent) => {
+  const handleContextButton = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleEditMovieModal();
-  }, []);
+  };
 
   return (
     <div
@@ -71,9 +71,9 @@ const MovieCard = ({
       )}
       <div className={classes.contextIcon}>
         <IconButton
-          icon={context_menu}
+          icon={contextMenu}
           handleClick={(e: React.MouseEvent) => handleContextButton(e)}
-          isRound={true}
+          isRound
         />
       </div>
     </div>

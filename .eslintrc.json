@@ -4,7 +4,9 @@
     "airbnb-typescript",
     "prettier",
     "plugin:prettier/recommended",
-    "react-hooks"
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
   ],
   "env": {
     "browser": true,
@@ -14,9 +16,21 @@
   "globals": {
     "document": false
   },
-  "parser": "@babel/eslint-parser",
-  "ignorePatterns": ["webpack/", "lint-staged.config.js"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "project": "./tsconfig.json",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "projectFolderIgnoreList": ["./**/tsconfig.json"]
+  },
+  "ignorePatterns": ["webpack/", "lint-staged.config.js", "node_modules/*"],
+  "plugins": ["jest"],
   "rules": {
+    "react/prop-types": 0,
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
     "react/function-component-definition": [
       "error",
       {
@@ -31,7 +45,7 @@
       2,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
-    "no-restricted-globals": ["error", "window"],
+    "import/no-unresolved": "error",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -65,11 +79,10 @@
         "endOfLine": "auto"
       }
     ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
-  },
-  "parserOptions": {
-    "ecmaVersion": 2020
+    "import/prefer-default-export": "off",
+    "react/require-default-props": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "react/no-unused-prop-types": 0
   },
   "settings": {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
@@ -81,21 +94,5 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
-  },
-  "plugins": ["jest"],
-  "overrides": [
-    {
-      "files": ["**/*.ts?(x)"],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module",
-        "ecmaFeatures": {
-          "jsx": true
-        },
-        "warnOnUnsupportedTypeScriptVersion": true,
-        "project": "./tsconfig.json"
-      }
-    }
-  ]
+  }
 }
