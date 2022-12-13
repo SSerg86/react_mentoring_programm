@@ -1,0 +1,81 @@
+.root {
+    background: #232323;
+    padding: 20px 60px 30px;
+    margin-bottom: 10px;
+}
+
+.content {
+    margin-top: 30px;
+    display: flex;
+}
+
+.image {
+    max-width: 323px;
+    margin-right: 60px;
+}
+
+.details {
+    color: #ffffff;
+}
+
+.movie_title_block {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.movie_title_block p {
+    margin: 0;
+}
+
+.title {
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 41px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.vote {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    margin-left: 25px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+    text-transform: uppercase;
+}
+
+.genre {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    opacity: 0.5;
+}
+
+.release {
+    display: flex;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 29px;
+    color: #F65261;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.release_date {
+    margin-right: 50px;
+}
+
+.overview {
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+    opacity: 0.5;
+}

@@ -1,0 +1,22 @@
+.root {
+    background: #232323;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+
+.icon {
+    height: auto;
+    object-fit: contain;
+    width: 100%;
+}
+
+.round {
+    border: 1px solid #2A202D;
+    border-radius: 50%;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../Button/Button';
 import classes from './SearchPanel.module.css';
 
 export interface SearchPanelProps {
@@ -18,9 +19,7 @@ const SearchPanel = ({ searchButton, placeholderText }: SearchPanelProps) => {
         type='text'
         placeholder={placeholderText}
       />
-      <button className={classes.searchButton} type='submit'>
-        {searchButton}
-      </button>
+      <Button inputValue={searchButton} inputType='submit' />
     </form>
   );
 };

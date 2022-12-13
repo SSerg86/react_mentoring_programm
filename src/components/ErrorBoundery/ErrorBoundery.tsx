@@ -13,10 +13,11 @@ interface State {
 class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      hasError: false,
+    };
   }
-  public state: State = {
-    hasError: false,
-  };
 
   public static getDerivedStateFromError(_: Error): State {
     return { hasError: true };
@@ -27,7 +28,9 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public render() {
-    if (this.state.hasError) {
+    const { hasError } = this.state;
+    const { handleDeleteMovieModal, children } = this.props;
+    if (hasError) {
       return (
         <div className={classes.error}>
           <h1>Sorry.. smth went wrong</h1>
@@ -35,13 +38,13 @@ class ErrorBoundary extends Component<Props, State> {
             className={classes.delete_btn}
             type='button'
             value='Delete Movie'
-            onClick={this.props.handleDeleteMovieModal}
+            onClick={handleDeleteMovieModal}
           />
         </div>
       );
     }
 
-    return this.props.children;
+    return children;
   }
 }
 

@@ -5,7 +5,7 @@ import classes from './DeleteMovieModal.module.css';
 import type { DeleteMovieModalProps } from './DeleteMovieModal.types';
 
 const DeleteMovieModal = ({ title, description }: DeleteMovieModalProps) => {
-  const handleConfirm = () => {
+  const handleClcik = () => {
     // eslint-disable-next-line no-console
     console.log('confirm');
   };
@@ -14,11 +14,7 @@ const DeleteMovieModal = ({ title, description }: DeleteMovieModalProps) => {
       <p className={classes.title}>{title}</p>
       <p className={classes.description}>{description}</p>
       <div className={classes.button}>
-        <Button
-          inputValue='Confirm'
-          inputType='button'
-          handleConfirm={handleConfirm}
-        />
+        <Button inputValue='Confirm' inputType='button' handleClcik={handleClcik} />
       </div>
     </div>
   );
