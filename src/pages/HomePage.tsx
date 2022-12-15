@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import DeleteMovieModal from '../components/DeleteMovieModal/DeleteMovieModal';
 import Footer from '../components/Footer/Footer';
 import FormWrapper from '../components/FormWrapper/FormWrapper';
@@ -9,11 +9,11 @@ import heroBannerProps from '../mocks/heroBanner';
 import classes from './HomePage.module.css';
 
 import MovieDetails from '../components/MovieDetails/MovieDetails';
-import { useMoviesContext } from '../hooks/MoviesContext';
+import { useAppSelector } from '../hooks/contextHook';
 
 const HomePage = () => {
-  const { toShowDetails, isAddForm, isDeleteMovieModal, isEditForm } =
-    useMoviesContext();
+  const { isAddForm, isEditForm, isDeleteMovieModal, toShowDetails } =
+    useAppSelector((state) => state.modalWindow);
 
   const heroBannerPropsExtended = {
     ...heroBannerProps,

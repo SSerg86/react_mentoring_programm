@@ -1,10 +1,5 @@
 import React from 'react';
-import { MoviesProvider } from './hooks/MoviesContext';
 import HomePage from './pages/HomePage';
 
-const App = () => (
-  <MoviesProvider>
-    <HomePage />
-  </MoviesProvider>
-);
+const App = () => <HomePage />;
 export default App;

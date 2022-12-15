@@ -6,20 +6,26 @@ import searchIcon from '../../assets/images/search_icon.png';
 
 import classes from './MovieDetails.module.css';
 import type { MovieDetailsProps } from './MovieDetails.types';
-import { useMoviesContext } from '../../hooks/MoviesContext';
+import { useAppDispatch, useAppSelector } from '../../hooks/contextHook';
+import { handleCloseMovieDetails } from '../../features/modalWindow/modalWindowSlice';
 
 const MovieDetails = ({ logo }: MovieDetailsProps) => {
-  const { handleCloseMovieDetails, moviesList, movieIdForDetails } =
-    useMoviesContext();
+  const { moviesList } = useAppSelector((state) => state.movies);
+  const { movieIdForDetails } = useAppSelector((state) => state.modalWindow);
+  const dispatch = useAppDispatch();
 
   const movieDetails = useMemo(() => {
     return moviesList.find((movie) => movie.id === movieIdForDetails);
   }, [movieIdForDetails, moviesList]);
 
+  const handleClick = () => {
+    dispatch(handleCloseMovieDetails());
+  };
+
   return (
     <div className={classes.root}>
       <LogoPanel imageUrl={logo}>
-        <IconButton icon={searchIcon} handleClick={handleCloseMovieDetails} />
+        <IconButton icon={searchIcon} handleClick={handleClick} />
       </LogoPanel>
       <div className={classes.content}>
         <img

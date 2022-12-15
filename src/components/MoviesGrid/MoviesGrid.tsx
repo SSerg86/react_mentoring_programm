@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
-import { useMoviesContext } from '../../hooks/MoviesContext';
+import React, { useMemo, useState, useEffect } from 'react';
+import { fetchMovies } from '../../features/movies/moviesSlice';
+import { useAppSelector, useAppDispatch } from '../../hooks/contextHook';
 import ErrorBoundary from '../ErrorBoundery/ErrorBoundery';
 import FilterPannel from '../FilterPannel/FilterPannel';
 import MovieCard, { MovieCardProps } from '../MovieCard/MovieCard';
@@ -7,19 +8,16 @@ import getGenresList from './helpers/getGenreList';
 import getReleaseList from './helpers/getReleaseList';
 import classes from './MoviesGrid.module.css';
 
-export interface MoviesGridProp {
-  handleOpenMovieDetails?: (value: number) => void;
-  handleDeleteMovieModal?: () => void;
-  handleEditMovieModal?: () => void;
-}
-
 const MoviesGrid = () => {
-  const {
-    handleOpenMovieDetails,
-    handleDeleteMovieModal,
-    handleEditMovieModal,
-    moviesList,
-  } = useMoviesContext();
+  const dispatch = useAppDispatch();
+
+  const { moviesList, status } = useAppSelector((state) => state.movies);
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchMovies());
+    }
+  }, [dispatch, status]);
 
   const [sortOption, setSortOption] = useState<string>('');
 
@@ -48,14 +46,9 @@ const MoviesGrid = () => {
           moviesToRender.map((movie: MovieCardProps) => {
             const movicardProps = {
               ...movie,
-              handleOpenMovieDetails,
-              handleEditMovieModal,
             };
             return (
-              <ErrorBoundary
-                key={movie.id}
-                handleDeleteMovieModal={handleDeleteMovieModal}
-              >
+              <ErrorBoundary key={movie.id}>
                 <MovieCard key={movie.id} {...movicardProps} />
               </ErrorBoundary>
             );

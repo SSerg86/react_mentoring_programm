@@ -1,5 +1,6 @@
 import React from 'react';
-import { useMoviesContext } from '../../hooks/MoviesContext';
+import { handleAddMovieModal } from '../../features/modalWindow/modalWindowSlice';
+import { useAppDispatch } from '../../hooks/contextHook';
 import LogoPanel from '../LogoPanel/LogoPanel';
 import SearchPanel, { SearchPanelProps } from '../SearchPanel/SearchPanel';
 
@@ -18,7 +19,7 @@ const HeroBanner = ({
   searchPanel,
   title,
 }: HeroBannerProps) => {
-  const { handleAddMovieModal } = useMoviesContext();
+  const dispatch = useAppDispatch();
 
   return (
     <div className={classes.main}>
@@ -26,7 +27,7 @@ const HeroBanner = ({
         <button
           className={classes.button}
           type='button'
-          onClick={() => handleAddMovieModal()}
+          onClick={() => dispatch(handleAddMovieModal())}
         >
           &#43; &#160;
           {buttonName}
