@@ -1,9 +1,6 @@
 import React from 'react';
 import classes from './Footer.module.css';
-
-interface FooterProps {
-  imageUrl: string;
-}
+import { FooterProps } from './Footer.types';
 
 const Footer = ({ imageUrl }: FooterProps) => (
   <div className={classes.footer}>

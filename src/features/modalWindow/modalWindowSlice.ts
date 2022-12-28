@@ -8,7 +8,6 @@ interface modalWindowState {
   isEditForm: boolean;
   isDeleteMovieModal: boolean;
   toShowDetails: boolean;
-  movieIdForDetails?: number;
 }
 
 const initialState: modalWindowState = {
@@ -17,7 +16,6 @@ const initialState: modalWindowState = {
   isEditForm: false,
   isDeleteMovieModal: false,
   toShowDetails: false,
-  movieIdForDetails: null,
 };
 
 export const modalWindowSlice = createSlice({
@@ -42,9 +40,8 @@ export const modalWindowSlice = createSlice({
       state.isModalActive = true;
       state.isDeleteMovieModal = true;
     },
-    handleOpenMovieDetails: (state, action) => {
+    handleOpenMovieDetails: (state) => {
       state.toShowDetails = true;
-      state.movieIdForDetails = action.payload;
     },
     handleCloseMovieDetails: (state) => {
       state.toShowDetails = false;

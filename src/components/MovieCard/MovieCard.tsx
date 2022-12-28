@@ -8,31 +8,13 @@ import {
   handleEditMovieModal,
   handleOpenMovieDetails,
 } from '../../features/modalWindow/modalWindowSlice';
+import { fetchMovieDetailsById } from '../../features/movieDetails/movieDetailsSlice';
+import { IMovie } from './MovieCard.types';
 
 const NOT_FOUND_IMG =
   'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
 
-export interface MovieCardProps {
-  id?: number;
-  poster_path?: string;
-  title?: string;
-  vote_average?: number;
-  vote_count?: number;
-  release_date?: string;
-  overview?: string;
-  budget?: number;
-  revenue?: number;
-  genres?: string[];
-  runtime?: number;
-}
-
-const MovieCard = ({
-  title,
-  poster_path,
-  release_date,
-  genres,
-  id,
-}: MovieCardProps) => {
+const MovieCard = ({ title, poster_path, release_date, genres, id }: IMovie) => {
   const date = new Date(release_date);
   if (!poster_path) {
     throw new Error('I crashed!');
@@ -53,7 +35,8 @@ const MovieCard = ({
   };
 
   const handleClick = () => {
-    dispatch(handleOpenMovieDetails(id));
+    dispatch(handleOpenMovieDetails());
+    dispatch(fetchMovieDetailsById(id));
     scrollToTop();
   };
 

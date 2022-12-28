@@ -1,11 +1,7 @@
 import React from 'react';
 import Button from '../Button/Button';
 import classes from './SearchPanel.module.css';
-
-export interface SearchPanelProps {
-  placeholderText: string;
-  searchButton: string;
-}
+import { SearchPanelProps } from './SearchPanel.types';
 
 const SearchPanel = ({ searchButton, placeholderText }: SearchPanelProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

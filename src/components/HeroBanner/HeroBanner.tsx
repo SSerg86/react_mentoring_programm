@@ -2,16 +2,10 @@ import React from 'react';
 import { handleAddMovieModal } from '../../features/modalWindow/modalWindowSlice';
 import { useAppDispatch } from '../../hooks/contextHook';
 import LogoPanel from '../LogoPanel/LogoPanel';
-import SearchPanel, { SearchPanelProps } from '../SearchPanel/SearchPanel';
+import SearchPanel from '../SearchPanel/SearchPanel';
 
 import classes from './HeroBanner.module.css';
-
-export interface HeroBannerProps {
-  buttonName: string;
-  imageUrl: string;
-  title?: string;
-  searchPanel?: SearchPanelProps;
-}
+import { HeroBannerProps } from './HeroBanner.types';
 
 const HeroBanner = ({
   imageUrl,

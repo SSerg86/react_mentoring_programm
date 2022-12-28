@@ -1,24 +1,11 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-interface movie {
-  id?: number;
-  title?: string;
-  tagline?: string;
-  vote_average?: number;
-  vote_count?: number;
-  poster_path?: string;
-  release_date?: string;
-  overview?: string;
-  budget?: number;
-  revenue?: number;
-  genres?: string[];
-  runtime?: number;
-}
+import { IMovie } from '../../components/MovieCard/MovieCard.types';
+import { baseURL } from '../../constants/path';
 
 interface moviesState {
-  moviesList: movie[];
+  moviesList: IMovie[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
@@ -30,12 +17,21 @@ const initialState: moviesState = {
 };
 
 export const fetchMovies = createAsyncThunk('movies/fetchMovies', async () => {
-  const response = await fetch('http://localhost:4000/movies').then((res) => {
-    return res.json();
-  });
+  const response = await fetch(`${baseURL}/movies`);
+  const payload = await response.json();
 
-  return response.data;
+  return payload.data;
 });
+
+export const fecthSortedMovies = createAsyncThunk(
+  'movies/fetchSortedMovies',
+  async (query: string) => {
+    const response = await fetch(`${baseURL}/movies?sortBy=${query}&sortOrder=desc`);
+    const payload = await response.json();
+
+    return payload.data;
+  }
+);
 
 export const moviesSlice = createSlice({
   name: 'movies',
@@ -43,7 +39,7 @@ export const moviesSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchMovies.pending, (state, action) => {
+      .addCase(fetchMovies.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
@@ -53,6 +49,14 @@ export const moviesSlice = createSlice({
       .addCase(fetchMovies.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      });
+    builder
+      .addCase(fecthSortedMovies.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fecthSortedMovies.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.moviesList = action.payload;
       });
   },
 });

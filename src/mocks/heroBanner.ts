@@ -1,6 +1,6 @@
 import logo from '../assets/images/logo.png';
-import { HeroBannerProps } from '../components/HeroBanner/HeroBanner';
-import { SearchPanelProps } from '../components/SearchPanel/SearchPanel';
+import { HeroBannerProps } from '../components/HeroBanner/HeroBanner.types';
+import { SearchPanelProps } from '../components/SearchPanel/SearchPanel.types';
 
 const searchPanelProps: SearchPanelProps = {
   placeholderText: 'What do you want to watch?',

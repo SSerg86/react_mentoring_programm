@@ -1,5 +1,5 @@
-import { MovieCardProps } from '../MovieCard/MovieCard';
+import { IMovie } from '../MovieCard/MovieCard.types';
 
-export interface MovieDetailsProps extends MovieCardProps {
+export interface MovieDetailsProps extends IMovie {
   logo?: string;
 }
