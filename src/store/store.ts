@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import moviesReducer from '../features/movies/moviesSlice';
+// import moviesReducer from '../features/movies/moviesSlice';
 import modalWindowReducer from '../features/modalWindow/modalWindowSlice';
 import movieDetailsReducer from '../features/movieDetails/movieDetailsSlice';
-import { moviesAPI } from '../services/MoviesService';
+import { moviesAPI } from './services/movies.api';
 
 export const store = configureStore({
   reducer: {
-    movies: moviesReducer,
+    // movies: moviesReducer,
     modalWindow: modalWindowReducer,
     movieDetails: movieDetailsReducer,
     [moviesAPI.reducerPath]: moviesAPI.reducer,

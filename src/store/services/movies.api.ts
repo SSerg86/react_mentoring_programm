@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IMovie } from '../components/MovieCard/MovieCard.types';
-import { baseURL } from '../constants/path';
+import { IMovie } from '../../components/MovieCard/MovieCard.types';
+import { baseURL } from '../../constants/path';
 
 interface ServerResponse<T> {
   totalAmount: number;
@@ -19,12 +19,13 @@ export const moviesAPI = createApi({
       }),
       transformResponse: (response: ServerResponse<IMovie>) => response.data,
     }),
-    fetchSortedMovies: build.query<ServerResponse<IMovie>, string>({
+    fetchSortedMovies: build.query<IMovie[], string>({
       query: (sortValue: string) => ({
         url: `/movies?sortBy=${sortValue}`,
       }),
+      transformResponse: (response: ServerResponse<IMovie>) => response.data,
     }),
   }),
 });
 
-export const { useFetchAllMoviesQuery, useFetchSortedMoviesQuery } = moviesAPI;
+export const { useFetchAllMoviesQuery, useLazyFetchSortedMoviesQuery } = moviesAPI;

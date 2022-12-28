@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { fecthSortedMovies, fetchMovies } from '../../features/movies/moviesSlice';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+// import { fecthSortedMovies, fetchMovies } from '../../features/movies/moviesSlice';
 import { useAppSelector, useAppDispatch } from '../../hooks/contextHook';
-import { useFetchAllMoviesQuery } from '../../services/MoviesService';
+import {
+  useFetchAllMoviesQuery,
+  useLazyFetchSortedMoviesQuery,
+} from '../../store/services/movies.api';
 import ErrorBoundary from '../ErrorBoundery/ErrorBoundery';
 import FilterPannel from '../FilterPannel/FilterPannel';
 import MovieCard from '../MovieCard/MovieCard';
@@ -12,7 +15,7 @@ import classes from './MoviesGrid.module.css';
 
 const MoviesGrid = () => {
   // regular Redux Toolkit
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   // const { moviesList, status } = useAppSelector((state) => state.movies);
 
   // useEffect(() => {
@@ -24,36 +27,44 @@ const MoviesGrid = () => {
   const [sortOption, setSortOption] = useState<string>('Release date');
 
   // using RTKQuery
-  const { data: moviesList, isLoading, error } = useFetchAllMoviesQuery('2018');
+  const { data: moviesList, isLoading } = useFetchAllMoviesQuery('');
+  const [fetchMovies, { data: sortedMovies, isLoading: isSortedLoading }] =
+    useLazyFetchSortedMoviesQuery();
 
-  // const { data: moviesList } = data ?? {};
+  const handleFiltering = useCallback(
+    (val: string) => {
+      setSortOption(val);
+      fetchMovies(val);
+      // dispatch(fecthSortedMovies(val));
+    },
+    [fetchMovies]
+  );
 
-  const genreListToRender = moviesList && getGenresList(moviesList);
-  const realeseDateList = moviesList && getReleaseList(moviesList);
+  const moviesToRender = useMemo(() => {
+    return sortedMovies?.length > 0 ? sortedMovies : moviesList;
+  }, [moviesList, sortedMovies]);
 
-  const handleFiltering = (val: string) => {
-    setSortOption(val);
-    dispatch(fecthSortedMovies(val));
-  };
+  const genreListToRender = moviesToRender && getGenresList(moviesToRender);
+  const realeseDateList = moviesToRender && getReleaseList(moviesToRender);
 
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {/* {status === 'loading' ? ( */}
-      {isLoading ? (
+      {isLoading || isSortedLoading ? (
         <h1>Loading...</h1>
       ) : (
         <div className={classes.container}>
           <FilterPannel
             genres={genreListToRender}
             realeseDate={realeseDateList}
-            numFound={moviesList.length}
+            numFound={moviesToRender?.length}
             onFilter={handleFiltering}
             optionValue={sortOption}
           />
           <div className={classes.movies_grid}>
-            {moviesList &&
-              moviesList.map((movie: IMovie) => {
+            {moviesToRender &&
+              moviesToRender?.map((movie: IMovie) => {
                 const movicardProps = {
                   ...movie,
                 };
