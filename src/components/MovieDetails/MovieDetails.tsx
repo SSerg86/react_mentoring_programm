@@ -6,7 +6,7 @@ import searchIcon from '../../assets/images/search_icon.png';
 import classes from './MovieDetails.module.css';
 import type { MovieDetailsProps } from './MovieDetails.types';
 import { useAppDispatch, useAppSelector } from '../../hooks/contextHook';
-import { handleCloseMovieDetails } from '../../features/modalWindow/modalWindowSlice';
+import { handleCloseMovieDetails } from '../../features/movieFormPopUp/movieFormPopUpSlice';
 
 const MovieDetails = ({ logo }: MovieDetailsProps) => {
   const { movieInfo, status } = useAppSelector((state) => state.movieDetails);

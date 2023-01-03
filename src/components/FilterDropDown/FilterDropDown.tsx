@@ -1,28 +1,28 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
+import { DropDownValues } from '../../constants/filterDropdown';
 import { FilterDropDownProps } from './FilterDropDawn.types';
 
-const FilterDropDown = ({
-  realeseDate,
-  onFilter,
-  optionValue,
-}: FilterDropDownProps) => {
+const FilterDropDown = ({ onFilter, optionValue }: FilterDropDownProps) => {
+  const handleOnChange = useCallback(
+    (val: string) => {
+      onFilter(val);
+    },
+    [onFilter]
+  );
   return (
     <form>
       <select
         value='REALEASE DATE'
         id='releases'
         name='releases'
-        onChange={(value) => onFilter(value.target.value)}
+        onChange={(value) => handleOnChange(value.target.value)}
       >
         <option value='REALEASE DATE'>{optionValue}</option>
-        {realeseDate
-          .filter((date) => date !== optionValue)
-          .sort()
-          .map((date) => (
-            <option key={date} value={date}>
-              {date}
-            </option>
-          ))}
+        {DropDownValues.map((val) => (
+          <option key={val} value={val}>
+            {val}
+          </option>
+        ))}
       </select>
     </form>
   );

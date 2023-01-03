@@ -5,9 +5,9 @@ import contextMenu from '../../assets/images/context_menu.png';
 import classes from './MovieCard.module.css';
 import { useAppDispatch } from '../../hooks/contextHook';
 import {
-  handleEditMovieModal,
+  handleEditMovieForm,
   handleOpenMovieDetails,
-} from '../../features/modalWindow/modalWindowSlice';
+} from '../../features/movieFormPopUp/movieFormPopUpSlice';
 import { fetchMovieDetailsById } from '../../features/movieDetails/movieDetailsSlice';
 import { IMovie } from './MovieCard.types';
 
@@ -24,7 +24,7 @@ const MovieCard = ({ title, poster_path, release_date, genres, id }: IMovie) => 
 
   const handleContextButton = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(handleEditMovieModal());
+    dispatch(handleEditMovieForm());
   };
 
   const scrollToTop = () => {

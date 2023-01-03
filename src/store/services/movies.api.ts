@@ -21,11 +21,21 @@ export const moviesAPI = createApi({
     }),
     fetchSortedMovies: build.query<IMovie[], string>({
       query: (sortValue: string) => ({
-        url: `/movies?sortBy=${sortValue}`,
+        url: `/movies?sortBy=${sortValue}&sortOrder=desc`,
+      }),
+      transformResponse: (response: ServerResponse<IMovie>) => response.data,
+    }),
+    fetchFilteredMoviesByGenre: build.query<IMovie[], string[]>({
+      query: (genreList: string[]) => ({
+        url: `/movies?filter=${genreList.toString()}`,
       }),
       transformResponse: (response: ServerResponse<IMovie>) => response.data,
     }),
   }),
 });
 
-export const { useFetchAllMoviesQuery, useLazyFetchSortedMoviesQuery } = moviesAPI;
+export const {
+  useFetchAllMoviesQuery,
+  useLazyFetchSortedMoviesQuery,
+  useLazyFetchFilteredMoviesByGenreQuery,
+} = moviesAPI;

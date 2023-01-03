@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
+
 import { createSlice } from '@reduxjs/toolkit';
 
-/* eslint-disable @typescript-eslint/naming-convention */
-interface modalWindowState {
+interface IMovieFormState {
   isModalActive: boolean;
   isAddForm: boolean;
   isEditForm: boolean;
@@ -10,7 +10,7 @@ interface modalWindowState {
   toShowDetails: boolean;
 }
 
-const initialState: modalWindowState = {
+const initialState: IMovieFormState = {
   isModalActive: false,
   isAddForm: false,
   isEditForm: false,
@@ -19,24 +19,24 @@ const initialState: modalWindowState = {
 };
 
 export const modalWindowSlice = createSlice({
-  name: 'modalWindow',
+  name: 'movieFormPopUp',
   initialState,
   reducers: {
-    handleModalWindow: (state, action) => {
+    handleMovieForm: (state, action) => {
       state.isAddForm = action.payload;
       state.isEditForm = action.payload;
       state.isModalActive = action.payload;
       state.isDeleteMovieModal = action.payload;
     },
-    handleAddMovieModal: (state) => {
+    handleAddMovieForm: (state) => {
       state.isModalActive = true;
       state.isAddForm = true;
     },
-    handleEditMovieModal: (state) => {
+    handleEditMovieForm: (state) => {
       state.isModalActive = true;
       state.isEditForm = true;
     },
-    handleDeleteMovieModal: (state) => {
+    handleDeleteMovieForm: (state) => {
       state.isModalActive = true;
       state.isDeleteMovieModal = true;
     },
@@ -50,10 +50,10 @@ export const modalWindowSlice = createSlice({
 });
 
 export const {
-  handleModalWindow,
-  handleAddMovieModal,
-  handleEditMovieModal,
-  handleDeleteMovieModal,
+  handleMovieForm,
+  handleAddMovieForm,
+  handleEditMovieForm,
+  handleDeleteMovieForm,
   handleOpenMovieDetails,
   handleCloseMovieDetails,
 } = modalWindowSlice.actions;

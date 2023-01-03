@@ -1,5 +1,5 @@
 import React from 'react';
-import { handleAddMovieModal } from '../../features/modalWindow/modalWindowSlice';
+import { handleAddMovieForm } from '../../features/movieFormPopUp/movieFormPopUpSlice';
 import { useAppDispatch } from '../../hooks/contextHook';
 import LogoPanel from '../LogoPanel/LogoPanel';
 import SearchPanel from '../SearchPanel/SearchPanel';
@@ -21,7 +21,7 @@ const HeroBanner = ({
         <button
           className={classes.button}
           type='button'
-          onClick={() => dispatch(handleAddMovieModal())}
+          onClick={() => dispatch(handleAddMovieForm())}
         >
           &#43; &#160;
           {buttonName}

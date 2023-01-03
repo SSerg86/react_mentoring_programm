@@ -3,5 +3,6 @@ export interface FilterPannelProps {
   realeseDate: string[];
   numFound: number;
   optionValue: string;
+  onSort: (value: string) => void;
   onFilter: (value: string) => void;
 }
