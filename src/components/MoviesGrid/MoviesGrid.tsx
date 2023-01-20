@@ -1,13 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { DropDownValues } from '../../constants/filterDropdown';
-import {
-  fecthFilteredMovies,
-  fecthSortedMovies,
-  fetchMovies,
-} from '../../features/movies/moviesSlice';
+import React, { useState, useEffect } from 'react';
+import { fetchMovies } from '../../features/movies/moviesSlice';
 import { useAppSelector, useAppDispatch } from '../../hooks/contextHook';
 import ErrorBoundary from '../ErrorBoundery/ErrorBoundery';
-import { getSortingQuery } from '../FilterDropDown/helpers/getSortingQuery';
 import FilterPannel from '../FilterPannel/FilterPannel';
 import MovieCard from '../MovieCard/MovieCard';
 import { IMovie } from '../MovieCard/MovieCard.types';
@@ -20,13 +14,19 @@ const MoviesGrid = () => {
   // =====================
   const dispatch = useAppDispatch();
   const { moviesList, status } = useAppSelector((state) => state.movies);
+  const [genres, setGenres] = useState<string[]>([]);
+  const [initialRequest, setInitialRequest] = useState<boolean>(false);
 
-  const [sortOption, setSortOption] = useState<string>(DropDownValues[0]);
   useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchMovies());
+      setInitialRequest(true);
     }
-  }, [dispatch, status]);
+    if (status === 'succeeded' && initialRequest) {
+      setGenres(getGenresList(moviesList));
+      setInitialRequest(false);
+    }
+  }, [dispatch, initialRequest, moviesList, status]);
 
   // RTKQuery aproach
   // ================
@@ -43,49 +43,11 @@ const MoviesGrid = () => {
   // }, [moviesList, filteredMovies]);
   // ================
 
-  const handleSorting = useCallback(
-    (val: string) => {
-      const sortingQuery = getSortingQuery(val);
-      setSortOption(val);
-      if (sortingQuery) {
-        dispatch(fecthSortedMovies(sortingQuery));
-      } else {
-        dispatch(fetchMovies());
-      }
-    },
-    [dispatch]
-  );
-
-  const [genres, setGenres] = useState<string[]>([]);
-
-  const handleFilterByGenre = useCallback(
-    (genre: string) => {
-      if (genres.includes(genre)) {
-        setGenres(genres.filter((val) => val !== genre));
-      } else {
-        setGenres(genres.concat(genre));
-      }
-
-      return genres.length > 0
-        ? dispatch(fecthFilteredMovies(genres))
-        : fetchMovies();
-    },
-    [dispatch, genres]
-  );
-
-  const genreListToRender = moviesList && getGenresList(moviesList);
   const realeseDateList = moviesList && getReleaseList(moviesList);
 
   return (
     <div className={classes.container}>
-      <FilterPannel
-        genres={genreListToRender}
-        realeseDate={realeseDateList}
-        numFound={moviesList?.length}
-        onSort={handleSorting}
-        onFilter={handleFilterByGenre}
-        optionValue={sortOption}
-      />
+      <FilterPannel genres={genres} realeseDate={realeseDateList} />
       <div className={classes.movies_grid}>
         {moviesList &&
           moviesList?.map((movie: IMovie) => {
