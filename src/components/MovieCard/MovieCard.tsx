@@ -5,8 +5,8 @@ import contextMenu from '../../assets/images/context_menu.png';
 import classes from './MovieCard.module.css';
 import { useAppDispatch } from '../../hooks/contextHook';
 import {
-  handleEditMovieForm,
-  handleOpenMovieDetails,
+  openEditMovieForm,
+  openMovieDetails,
 } from '../../features/movieFormPopUp/movieFormPopUpSlice';
 import { fetchMovieDetailsById } from '../../features/movieDetails/movieDetailsSlice';
 import { IMovie } from './MovieCard.types';
@@ -16,15 +16,12 @@ const NOT_FOUND_IMG =
 
 const MovieCard = ({ title, poster_path, release_date, genres, id }: IMovie) => {
   const date = new Date(release_date);
-  if (!poster_path) {
-    throw new Error('I crashed!');
-  }
 
   const dispatch = useAppDispatch();
 
   const handleContextButton = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(handleEditMovieForm());
+    dispatch(openEditMovieForm());
   };
 
   const scrollToTop = () => {
@@ -35,7 +32,7 @@ const MovieCard = ({ title, poster_path, release_date, genres, id }: IMovie) => 
   };
 
   const handleClick = () => {
-    dispatch(handleOpenMovieDetails());
+    dispatch(openMovieDetails());
     dispatch(fetchMovieDetailsById(id));
     scrollToTop();
   };

@@ -4,16 +4,16 @@ import LogoPanel from '../LogoPanel/LogoPanel';
 import searchIcon from '../../assets/images/search_icon.png';
 
 import classes from './MovieDetails.module.css';
-import type { MovieDetailsProps } from './MovieDetails.types';
 import { useAppDispatch, useAppSelector } from '../../hooks/contextHook';
-import { handleCloseMovieDetails } from '../../features/movieFormPopUp/movieFormPopUpSlice';
+import { closeMovieDetails } from '../../features/movieFormPopUp/movieFormPopUpSlice';
+import heroBannerProps from '../../mocks/heroBanner';
 
-const MovieDetails = ({ logo }: MovieDetailsProps) => {
+const MovieDetails = () => {
   const { movieInfo, status } = useAppSelector((state) => state.movieDetails);
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    dispatch(handleCloseMovieDetails());
+    dispatch(closeMovieDetails());
   };
 
   if (status === 'loading') {
@@ -22,7 +22,7 @@ const MovieDetails = ({ logo }: MovieDetailsProps) => {
 
   return (
     <div className={classes.root}>
-      <LogoPanel imageUrl={logo}>
+      <LogoPanel imageUrl={heroBannerProps.imageUrl}>
         <IconButton icon={searchIcon} handleClick={handleClick} />
       </LogoPanel>
       <div className={classes.content}>

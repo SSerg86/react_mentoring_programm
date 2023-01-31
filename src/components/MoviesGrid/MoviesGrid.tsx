@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { fetchMovies } from '../../features/movies/moviesSlice';
+import { requestMovies } from '../../features/movies/moviesSlice';
 import { useAppSelector, useAppDispatch } from '../../hooks/contextHook';
-import ErrorBoundary from '../ErrorBoundery/ErrorBoundery';
-import FilterPannel from '../FilterPannel/FilterPannel';
+import FilterPanel from '../FilterPanel/FilterPanel';
 import MovieCard from '../MovieCard/MovieCard';
 import { IMovie } from '../MovieCard/MovieCard.types';
 import getGenresList from './helpers/getGenreList';
@@ -10,55 +9,33 @@ import getReleaseList from './helpers/getReleaseList';
 import classes from './MoviesGrid.module.css';
 
 const MoviesGrid = () => {
-  // regular Redux Toolkit
-  // =====================
   const dispatch = useAppDispatch();
-  const { moviesList, status } = useAppSelector((state) => state.movies);
+  const { moviesList, status, isInitialRequest } = useAppSelector(
+    (state) => state.movies
+  );
   const [genres, setGenres] = useState<string[]>([]);
-  const [initialRequest, setInitialRequest] = useState<boolean>(false);
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(fetchMovies());
-      setInitialRequest(true);
+      dispatch(requestMovies());
     }
-    if (status === 'succeeded' && initialRequest) {
+    if (status === 'succeeded' && isInitialRequest) {
       setGenres(getGenresList(moviesList));
-      setInitialRequest(false);
     }
-  }, [dispatch, initialRequest, moviesList, status]);
+  }, [dispatch, isInitialRequest, moviesList, status]);
 
-  // RTKQuery aproach
-  // ================
-  // const { data: moviesList, isLoading } = useFetchAllMoviesQuery('');
-  // const [fecthSortedMovies, { data: sortedMovies, isLoading: isSortedLoading }] =
-  //   useLazyFetchSortedMoviesQuery();
-  // const [
-  //   fecthFilteredMovies,
-  //   { data: filteredMovies, isLoading: isFilteredLoading },
-  // ] = useLazyFetchFilteredMoviesByGenreQuery();
-
-  // const moviesToRender = useMemo(() => {
-  //   return filteredMovies?.length > 0 ? filteredMovies : moviesList;
-  // }, [moviesList, filteredMovies]);
-  // ================
-
-  const realeseDateList = moviesList && getReleaseList(moviesList);
+  const releaseDateList = moviesList && getReleaseList(moviesList);
 
   return (
     <div className={classes.container}>
-      <FilterPannel genres={genres} realeseDate={realeseDateList} />
+      <FilterPanel genres={genres} releaseDate={releaseDateList} />
       <div className={classes.movies_grid}>
         {moviesList &&
           moviesList?.map((movie: IMovie) => {
-            const movicardProps = {
+            const movieCardProps = {
               ...movie,
             };
-            return (
-              <ErrorBoundary key={movie.id}>
-                <MovieCard key={movie.id} {...movicardProps} />
-              </ErrorBoundary>
-            );
+            return <MovieCard key={movie.id} {...movieCardProps} />;
           })}
       </div>
     </div>

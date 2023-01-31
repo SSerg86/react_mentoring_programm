@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  fecthFilteredMovies,
-  fecthSortedMovies,
-  fetchMovies,
+  requestFilteredMovies,
+  requestSortedMovies,
+  requestMovies,
 } from '../../features/movies/moviesSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/contextHook';
 import FilterDropDown from '../FilterDropDown/FilterDropDown';
 import { getSortingQuery } from '../FilterDropDown/helpers/getSortingQuery';
 import GenreOptionsList from '../GenreOptionsList/GenreOptionsList';
-import { FilterPannelProps } from './FilterPanel.types';
-import classes from './FilterPannel.module.css';
+import { FilterPanelProps } from './FilterPanel.types';
+import classes from './FilterPanel.module.css';
 
-const FilterPannel = ({ genres, realeseDate }: FilterPannelProps) => {
+const FilterPanel = ({ genres, releaseDate }: FilterPanelProps) => {
   const { moviesList } = useAppSelector((state) => state.movies);
   const dispatch = useAppDispatch();
 
@@ -48,8 +48,8 @@ const FilterPannel = ({ genres, realeseDate }: FilterPannelProps) => {
       }
 
       return query.length > 0
-        ? dispatch(fecthFilteredMovies(query))
-        : dispatch(fetchMovies());
+        ? dispatch(requestFilteredMovies(query))
+        : dispatch(requestMovies());
     },
     [checkedState, dispatch, selectedGenres]
   );
@@ -60,9 +60,9 @@ const FilterPannel = ({ genres, realeseDate }: FilterPannelProps) => {
       setSortOption(val);
 
       if (sortingQuery) {
-        dispatch(fecthSortedMovies(sortingQuery));
+        dispatch(requestSortedMovies(sortingQuery));
       } else {
-        dispatch(fetchMovies());
+        dispatch(requestMovies());
       }
     },
     [dispatch]
@@ -94,7 +94,7 @@ const FilterPannel = ({ genres, realeseDate }: FilterPannelProps) => {
         </ul>
         <p className={classes.sort_label}>Sort by</p>
         <FilterDropDown
-          realeseDate={realeseDate}
+          releaseDate={releaseDate}
           onFilter={handleSorting}
           optionValue={sortOption}
         />
@@ -104,4 +104,4 @@ const FilterPannel = ({ genres, realeseDate }: FilterPannelProps) => {
   );
 };
 
-export default FilterPannel;
+export default FilterPanel;

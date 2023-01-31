@@ -1,10 +1,10 @@
 import React from 'react';
+import heroBannerProps from '../../mocks/heroBanner';
 import classes from './Footer.module.css';
-import { FooterProps } from './Footer.types';
 
-const Footer = ({ imageUrl }: FooterProps) => (
+const Footer = () => (
   <div className={classes.footer}>
-    <img src={imageUrl} alt='Logo' />
+    <img src={heroBannerProps.imageUrl} alt='Logo' />
   </div>
 );
 

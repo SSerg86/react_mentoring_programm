@@ -1,5 +1,5 @@
 export interface FilterDropDownProps {
-  realeseDate: string[];
+  releaseDate: string[];
   optionValue: string;
   onFilter: (value: string) => void;
 }

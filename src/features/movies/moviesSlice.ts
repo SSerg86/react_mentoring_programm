@@ -8,23 +8,25 @@ interface moviesState {
   moviesList: IMovie[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  isInitialRequest: boolean;
 }
 
 const initialState: moviesState = {
   moviesList: [],
   status: 'idle',
+  isInitialRequest: true,
   error: null,
 };
 
-export const fetchMovies = createAsyncThunk('movies/fetchMovies', async () => {
+export const requestMovies = createAsyncThunk('movies/requestMovies', async () => {
   const response = await fetch(`${baseURL}/movies`);
   const payload = await response.json();
 
   return payload.data;
 });
 
-export const fecthSortedMovies = createAsyncThunk(
-  'movies/fetchSortedMovies',
+export const requestSortedMovies = createAsyncThunk(
+  'movies/requestSortedMovies',
   async (query: string) => {
     const response = await fetch(`${baseURL}/movies?sortBy=${query}&sortOrder=desc`);
     const payload = await response.json();
@@ -33,8 +35,8 @@ export const fecthSortedMovies = createAsyncThunk(
   }
 );
 
-export const fecthFilteredMovies = createAsyncThunk(
-  'movies/fecthFilteredMovies',
+export const requestFilteredMovies = createAsyncThunk(
+  'movies/requestFilteredMovies',
   async (query: string[]) => {
     const response = await fetch(`${baseURL}/movies?filter=${query.toString()}`);
     const payload = await response.json();
@@ -49,29 +51,31 @@ export const moviesSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchMovies.fulfilled, (state, action) => {
+      .addCase(requestMovies.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.moviesList = action.payload;
       })
-      .addCase(fetchMovies.rejected, (state, action) => {
+      .addCase(requestMovies.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
     builder
-      .addCase(fecthSortedMovies.fulfilled, (state, action) => {
+      .addCase(requestSortedMovies.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.moviesList = action.payload;
+        state.isInitialRequest = false;
       })
-      .addCase(fecthSortedMovies.rejected, (state, action) => {
+      .addCase(requestSortedMovies.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
     builder
-      .addCase(fecthFilteredMovies.fulfilled, (state, action) => {
+      .addCase(requestFilteredMovies.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.moviesList = action.payload;
+        state.isInitialRequest = false;
       })
-      .addCase(fecthFilteredMovies.rejected, (state, action) => {
+      .addCase(requestFilteredMovies.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

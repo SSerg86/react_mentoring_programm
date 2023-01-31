@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { handleMovieForm } from '../../features/movieFormPopUp/movieFormPopUpSlice';
+import { closeForm } from '../../features/movieFormPopUp/movieFormPopUpSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/contextHook';
 
 import classes from './ModalWindow.module.css';
@@ -14,7 +14,7 @@ const ModalWindow = ({ children }: ModalWindowProps) => {
     <div
       aria-hidden
       className={`${classes.root} ${activeClass}`}
-      onClick={() => dispatch(handleMovieForm(false))}
+      onClick={() => dispatch(closeForm(false))}
     >
       <div
         aria-hidden

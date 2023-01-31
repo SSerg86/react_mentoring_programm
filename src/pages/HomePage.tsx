@@ -5,7 +5,6 @@ import FormWrapper from '../components/FormWrapper/FormWrapper';
 import HeroBanner from '../components/HeroBanner/HeroBanner';
 import ModalWindow from '../components/ModalWindow/ModalWindow';
 import MoviesGrid from '../components/MoviesGrid/MoviesGrid';
-import heroBannerProps from '../mocks/heroBanner';
 import classes from './HomePage.module.css';
 
 import MovieDetails from '../components/MovieDetails/MovieDetails';
@@ -15,23 +14,11 @@ const HomePage = () => {
   const { isAddForm, isEditForm, isDeleteMovieModal, toShowDetails } =
     useAppSelector((state) => state.modalWindow);
 
-  const heroBannerPropsExtended = {
-    ...heroBannerProps,
-  };
-
-  const movieDetailsProps = {
-    logo: heroBannerProps.imageUrl,
-  };
-
   return (
     <div className={classes.root}>
-      {toShowDetails ? (
-        <MovieDetails {...movieDetailsProps} />
-      ) : (
-        <HeroBanner {...heroBannerPropsExtended} />
-      )}
+      {toShowDetails ? <MovieDetails /> : <HeroBanner />}
       <MoviesGrid />
-      <Footer imageUrl={heroBannerProps.imageUrl} />
+      <Footer />
       <ModalWindow>
         {isAddForm && <FormWrapper modal_title='Add Movie' />}
         {isEditForm && <FormWrapper modal_title='Edit Movie' />}

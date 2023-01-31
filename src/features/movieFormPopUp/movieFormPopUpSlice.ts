@@ -22,40 +22,40 @@ export const modalWindowSlice = createSlice({
   name: 'movieFormPopUp',
   initialState,
   reducers: {
-    handleMovieForm: (state, action) => {
+    closeForm: (state, action) => {
       state.isAddForm = action.payload;
       state.isEditForm = action.payload;
       state.isModalActive = action.payload;
       state.isDeleteMovieModal = action.payload;
     },
-    handleAddMovieForm: (state) => {
+    openAddMovieForm: (state) => {
       state.isModalActive = true;
       state.isAddForm = true;
     },
-    handleEditMovieForm: (state) => {
+    openEditMovieForm: (state) => {
       state.isModalActive = true;
       state.isEditForm = true;
     },
-    handleDeleteMovieForm: (state) => {
+    openDeleteMovieForm: (state) => {
       state.isModalActive = true;
       state.isDeleteMovieModal = true;
     },
-    handleOpenMovieDetails: (state) => {
+    openMovieDetails: (state) => {
       state.toShowDetails = true;
     },
-    handleCloseMovieDetails: (state) => {
+    closeMovieDetails: (state) => {
       state.toShowDetails = false;
     },
   },
 });
 
 export const {
-  handleMovieForm,
-  handleAddMovieForm,
-  handleEditMovieForm,
-  handleDeleteMovieForm,
-  handleOpenMovieDetails,
-  handleCloseMovieDetails,
+  closeForm,
+  openAddMovieForm,
+  openEditMovieForm,
+  openDeleteMovieForm,
+  openMovieDetails,
+  closeMovieDetails,
 } = modalWindowSlice.actions;
 
 export default modalWindowSlice.reducer;
