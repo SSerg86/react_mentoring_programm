@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { useMoviesContext } from '../../hooks/MoviesContext';
+import { closeForm } from '../../features/movieFormPopUp/movieFormPopUpSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/contextHook';
 
 import classes from './ModalWindow.module.css';
 import type { ModalWindowProps } from './ModalWindow.types';
 
 const ModalWindow = ({ children }: ModalWindowProps) => {
-  const { handleModalWindow, isModalActive } = useMoviesContext();
+  const { isModalActive } = useAppSelector((state) => state.modalWindow);
+  const dispatch = useAppDispatch();
   const activeClass = isModalActive ? classes.active : '';
 
   return (
     <div
       aria-hidden
       className={`${classes.root} ${activeClass}`}
-      onClick={() => handleModalWindow(false)}
+      onClick={() => dispatch(closeForm(false))}
     >
       <div
         aria-hidden

@@ -1,64 +1,41 @@
-import React, { useMemo, useState } from 'react';
-import { useMoviesContext } from '../../hooks/MoviesContext';
-import ErrorBoundary from '../ErrorBoundery/ErrorBoundery';
-import FilterPannel from '../FilterPannel/FilterPannel';
-import MovieCard, { MovieCardProps } from '../MovieCard/MovieCard';
+import React, { useState, useEffect } from 'react';
+import { requestMovies } from '../../features/movies/moviesSlice';
+import { useAppSelector, useAppDispatch } from '../../hooks/contextHook';
+import FilterPanel from '../FilterPanel/FilterPanel';
+import MovieCard from '../MovieCard/MovieCard';
+import { IMovie } from '../MovieCard/MovieCard.types';
 import getGenresList from './helpers/getGenreList';
 import getReleaseList from './helpers/getReleaseList';
 import classes from './MoviesGrid.module.css';
 
-export interface MoviesGridProp {
-  handleOpenMovieDetails?: (value: number) => void;
-  handleDeleteMovieModal?: () => void;
-  handleEditMovieModal?: () => void;
-}
-
 const MoviesGrid = () => {
-  const {
-    handleOpenMovieDetails,
-    handleDeleteMovieModal,
-    handleEditMovieModal,
-    moviesList,
-  } = useMoviesContext();
+  const dispatch = useAppDispatch();
+  const { moviesList, status, isInitialRequest } = useAppSelector(
+    (state) => state.movies
+  );
+  const [genres, setGenres] = useState<string[]>([]);
 
-  const [sortOption, setSortOption] = useState<string>('');
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(requestMovies());
+    }
+    if (status === 'succeeded' && isInitialRequest) {
+      setGenres(getGenresList(moviesList));
+    }
+  }, [dispatch, isInitialRequest, moviesList, status]);
 
-  const moviesToRender = useMemo<MovieCardProps[]>(() => {
-    return sortOption
-      ? moviesList.filter((movie: MovieCardProps) =>
-          movie.release_date.includes(sortOption)
-        )
-      : moviesList;
-  }, [moviesList, sortOption]);
-
-  const genreListToRender = getGenresList(moviesList);
-
-  const realeseDateList = getReleaseList(moviesList);
+  const releaseDateList = moviesList && getReleaseList(moviesList);
 
   return (
     <div className={classes.container}>
-      <FilterPannel
-        genres={genreListToRender}
-        realeseDate={realeseDateList}
-        numFound={moviesList.length}
-        onFilter={setSortOption}
-      />
+      <FilterPanel genres={genres} releaseDate={releaseDateList} />
       <div className={classes.movies_grid}>
-        {moviesToRender &&
-          moviesToRender.map((movie: MovieCardProps) => {
-            const movicardProps = {
+        {moviesList &&
+          moviesList?.map((movie: IMovie) => {
+            const movieCardProps = {
               ...movie,
-              handleOpenMovieDetails,
-              handleEditMovieModal,
             };
-            return (
-              <ErrorBoundary
-                key={movie.id}
-                handleDeleteMovieModal={handleDeleteMovieModal}
-              >
-                <MovieCard key={movie.id} {...movicardProps} />
-              </ErrorBoundary>
-            );
+            return <MovieCard key={movie.id} {...movieCardProps} />;
           })}
       </div>
     </div>

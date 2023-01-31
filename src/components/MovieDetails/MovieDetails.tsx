@@ -1,43 +1,47 @@
 import * as React from 'react';
-import { useMemo } from 'react';
 import IconButton from '../IconButton/IconButton';
 import LogoPanel from '../LogoPanel/LogoPanel';
 import searchIcon from '../../assets/images/search_icon.png';
 
 import classes from './MovieDetails.module.css';
-import type { MovieDetailsProps } from './MovieDetails.types';
-import { useMoviesContext } from '../../hooks/MoviesContext';
+import { useAppDispatch, useAppSelector } from '../../hooks/contextHook';
+import { closeMovieDetails } from '../../features/movieFormPopUp/movieFormPopUpSlice';
+import heroBannerProps from '../../mocks/heroBanner';
 
-const MovieDetails = ({ logo }: MovieDetailsProps) => {
-  const { handleCloseMovieDetails, moviesList, movieIdForDetails } =
-    useMoviesContext();
+const MovieDetails = () => {
+  const { movieInfo, status } = useAppSelector((state) => state.movieDetails);
+  const dispatch = useAppDispatch();
 
-  const movieDetails = useMemo(() => {
-    return moviesList.find((movie) => movie.id === movieIdForDetails);
-  }, [movieIdForDetails, moviesList]);
+  const handleClick = () => {
+    dispatch(closeMovieDetails());
+  };
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={classes.root}>
-      <LogoPanel imageUrl={logo}>
-        <IconButton icon={searchIcon} handleClick={handleCloseMovieDetails} />
+      <LogoPanel imageUrl={heroBannerProps.imageUrl}>
+        <IconButton icon={searchIcon} handleClick={handleClick} />
       </LogoPanel>
       <div className={classes.content}>
         <img
           className={classes.image}
-          src={movieDetails.poster_path}
-          alt={movieDetails.title}
+          src={movieInfo?.poster_path}
+          alt={movieInfo?.title}
         />
         <div className={classes.details}>
           <div className={classes.movie_title_block}>
-            <p className={classes.title}>{movieDetails.title}</p>
-            <div className={classes.vote}>{movieDetails.vote_average}</div>
+            <p className={classes.title}>{movieInfo.title}</p>
+            <div className={classes.vote}>{movieInfo.vote_average}</div>
           </div>
-          <p className={classes.genre}>{movieDetails.genres[0]}</p>
+          <p className={classes.genre}>{movieInfo?.genres[0]}</p>
           <div className={classes.release}>
-            <div className={classes.release_date}>{movieDetails.release_date}</div>
-            <div>{movieDetails.runtime}</div>
+            <div className={classes.release_date}>{movieInfo?.release_date}</div>
+            <div>{movieInfo?.runtime}</div>
           </div>
-          <p className={classes.overview}>{movieDetails.overview}</p>
+          <p className={classes.overview}>{movieInfo?.overview}</p>
         </div>
       </div>
     </div>

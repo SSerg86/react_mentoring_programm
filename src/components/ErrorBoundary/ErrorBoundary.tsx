@@ -1,9 +1,8 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import classes from './ErrorBoundery.module.css';
+import classes from './ErrorBoundary.module.css';
 
 interface Props {
   children: ReactNode;
-  handleDeleteMovieModal: () => void;
 }
 
 interface State {
@@ -29,17 +28,11 @@ class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     const { hasError } = this.state;
-    const { handleDeleteMovieModal, children } = this.props;
+    const { children } = this.props;
     if (hasError) {
       return (
         <div className={classes.error}>
           <h1>Sorry.. smth went wrong</h1>
-          <input
-            className={classes.delete_btn}
-            type='button'
-            value='Delete Movie'
-            onClick={handleDeleteMovieModal}
-          />
         </div>
       );
     }
